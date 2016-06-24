@@ -1,0 +1,8 @@
+default:
+    suites:
+        default:
+            contexts:
+              - ApiContext:
+                  client: "GuzzleHttp\\Client"
+                  baseUri: http://localhost
+
