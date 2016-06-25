@@ -2,5 +2,10 @@
 /**
  * @author davidcontavalli <david.contavalli@lovoo.com>
  */
-var_dump($_SERVER['REQUEST_URI']);
-echo "hellp";
+
+use Addresses\Controller\AddressController;
+
+$autoLoader = require '../vendor/autoload.php';
+
+$addressController = new AddressController();
+echo $addressController->get();

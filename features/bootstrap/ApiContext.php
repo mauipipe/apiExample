@@ -4,6 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 
 class ApiContext implements Context, SnippetAcceptingContext
@@ -43,6 +44,7 @@ class ApiContext implements Context, SnippetAcceptingContext
     {
         $responseStatus = $this->response->getStatusCode();
         $message = sprintf("Status code %d different from expected %d", $responseStatus, $statusCode);
+
         PHPUnit_Framework_Assert::assertSame((int)$statusCode, $responseStatus, $message);
     }
 
@@ -53,9 +55,17 @@ class ApiContext implements Context, SnippetAcceptingContext
      */
     public function theResponseShouldBe(PyStringNode $reponse)
     {
-        $expectedResponse = json_decode($reponse->getRaw());
-        $responseContent = $this->response->getBody()->getContents();
+        $expectedResponse = json_decode($reponse->getRaw(), 1);
+        PHPUnit_Framework_Assert::assertEquals($expectedResponse, json_decode($this->response->getBody()->getContents(), 1));
+    }
 
-        PHPUnit_Framework_Assert::assertEquals($expectedResponse, $responseContent);
+    /**
+     * @Then print response
+     */
+    public function printResponse()
+    {
+        $body = $this->response->getBody();
+        echo $body;
+        $body->rewind(0);
     }
 }
