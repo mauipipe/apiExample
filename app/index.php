@@ -3,10 +3,11 @@
  * @author davidcontavalli <david.contavalli@lovoo.com>
  */
 
-use Addresses\Controller\AddressController;
+use Addresses\Router\Router;
 
 $autoLoader = require '../vendor/autoload.php';
 
-$addressService = \Addresses\Factory\AddressServiceFactory::create();
-$addressController = new AddressController($addressService);
-echo $addressController->get();
+$router = new Router();
+
+$controller = $router->dispatch();
+echo $controller->get();
