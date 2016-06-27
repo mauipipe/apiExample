@@ -8,9 +8,7 @@
 
 namespace Addresses\Router;
 
-
-use Addresses\Controller\AddressController;
-use Addresses\Factory\AddressServiceFactory;
+use Addresses\Factory\AddressControllerFactory;
 
 class Router
 {
@@ -24,7 +22,6 @@ class Router
 
     public function dispatch()
     {
-        $addressService = AddressServiceFactory::create();
-        return new AddressController($addressService);
+        return AddressControllerFactory::create();
     }
 }
