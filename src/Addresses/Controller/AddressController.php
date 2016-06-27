@@ -2,6 +2,9 @@
 
 namespace Addresses\Controller;
 
+use Addresses\Repository\AddressRepository;
+use Addresses\Service\AddressService;
+
 /**
  * @author davidcontavalli <david.contavalli@lovoo.com>
  **/
@@ -9,20 +12,10 @@ class AddressController
 {
     public function get()
     {
-        $response = [
-            [
-                "name" => "test",
-                "address" => "mercy",
-                "nr" => 23
-            ],
-            [
-                "name" => "test2",
-                "address" => "mercy2",
-                "nr" => 45
-            ]
-        ];
+        $addressRepository = new AddressRepository();
+        $addressService = new AddressService($addressRepository);
 
-        return json_encode($response);
+        return json_encode($addressService->getAddresses());
     }
 
 }
