@@ -24,8 +24,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function dispatchesAnActionFromControllerBasedOnConsumedUri()
+    public function initializesControllerWhenConfigRouteMatchUri()
     {
+        $_SERVER['REQUEST_URI'] = 'address';
         $result = $this->router->dispatch();
         $this->assertInstanceOf('Addresses\Controller\AddressController', $result);
     }

@@ -8,10 +8,12 @@
 
 namespace Addresses\Router;
 
-use Addresses\Factory\AddressControllerFactory;
+use Addresses\Config\Config;
+use Addresses\Factory\FactoryInterface;
 
 class Router
 {
+    const ROUTE = 'route';
 
     /**
      * Router constructor.
@@ -22,6 +24,17 @@ class Router
 
     public function dispatch()
     {
-        return AddressControllerFactory::create();
+        $uri = $_SERVER['REQUEST_URI'];
+        $config = new Config(__DIR__ . '/../../../config/route.json');
+
+        foreach ($config->getConfig() as $key => $configRow) {
+            $pattern = '@^'. $uri . '$@';
+            if (preg_match($pattern, $uri)) {
+                $controller = $configRow['factory'];
+                /** @var FactoryInterface */
+                return $controller::create();
+            }
+        }
+        throw new \RuntimeException(sprintf('Invalid route provided %s', $uri));
     }
 }

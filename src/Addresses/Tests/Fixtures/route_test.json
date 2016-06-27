@@ -1,0 +1,6 @@
+{
+  "address": {
+    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "method": "GET"
+  }
+}
