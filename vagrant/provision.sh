@@ -1,4 +1,4 @@
-  #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # Use single quotes instead of double quotes to make it work with special-character passwords
 PASSWORD='12345678'
@@ -56,7 +56,10 @@ sudo ln -s /etc/nginx/sites-available/address.local /etc/nginx/sites-enabled/add
 rm /etc/nginx/sites-available/default
 sudo service nginx restart
 
-
+# preparing swap
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=512k
+mkswap /swapfile
+swapon /swapfile
 
 # install mysql and give password to installer
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PASSWORD"
