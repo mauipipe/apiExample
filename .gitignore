@@ -1,6 +1,10 @@
-
-.idea/router.iml
-.idea/vcs.xml
 vendor/
 vagrant/.vagrant
-
+.idea/compiler.xml
+.idea/copyright/
+.idea/misc.xml
+.idea/modules.xml
+addresses.iml
+composer.lock
+config/
+vagrant/config/
