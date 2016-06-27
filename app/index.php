@@ -7,5 +7,6 @@ use Addresses\Controller\AddressController;
 
 $autoLoader = require '../vendor/autoload.php';
 
-$addressController = new AddressController();
+$addressService = \Addresses\Factory\AddressServiceFactory::create();
+$addressController = new AddressController($addressService);
 echo $addressController->get();

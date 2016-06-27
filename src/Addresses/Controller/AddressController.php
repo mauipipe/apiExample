@@ -2,7 +2,6 @@
 
 namespace Addresses\Controller;
 
-use Addresses\Repository\AddressRepository;
 use Addresses\Service\AddressService;
 
 /**
@@ -10,12 +9,23 @@ use Addresses\Service\AddressService;
  **/
 class AddressController
 {
+    /**
+     * @var AddressService
+     */
+    private $addressService;
+
+    /**
+     * AddressController constructor.
+     * @param AddressService $addressService
+     */
+    public function __construct(AddressService $addressService)
+    {
+        $this->addressService = $addressService;
+    }
+
     public function get()
     {
-        $addressRepository = new AddressRepository();
-        $addressService = new AddressService($addressRepository);
-
-        return json_encode($addressService->getAddresses());
+        return json_encode($this->addressService->getAddresses());
     }
 
 }
