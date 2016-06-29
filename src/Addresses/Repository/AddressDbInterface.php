@@ -11,4 +11,6 @@ namespace Addresses\Repository;
 interface AddressDbInterface
 {
     public function fetchAddresses();
+
+    public function fetchAddressByParams($getQueryParams);
 }

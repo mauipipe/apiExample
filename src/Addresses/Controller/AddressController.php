@@ -2,6 +2,7 @@
 
 namespace Addresses\Controller;
 
+use Addresses\Http\Request;
 use Addresses\Service\AddressService;
 
 /**
@@ -23,9 +24,15 @@ class AddressController
         $this->addressService = $addressService;
     }
 
-    public function get()
+    public function getAddresses()
     {
         return json_encode($this->addressService->getAddresses());
+    }
+
+    public function getAddress(Request $request)
+    {
+        $params = $request->getQueryParams();
+        return json_encode($this->addressService->getAddress($params));
     }
 
 }

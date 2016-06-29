@@ -31,4 +31,15 @@ class AddressRepository implements AddressDbInterface
             ]
         ];
     }
+
+    public function fetchAddressByParams($getQueryParams)
+    {
+        return [
+            [
+                "name" => "test",
+                "address" => "mercy",
+                "nr" => 23
+            ]
+        ];
+    }
 }

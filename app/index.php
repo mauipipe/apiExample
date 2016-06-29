@@ -9,5 +9,5 @@ $autoLoader = require '../vendor/autoload.php';
 
 $router = new Router();
 
-$controller = $router->dispatch();
-echo $controller->get();
+echo $router->dispatch();
+

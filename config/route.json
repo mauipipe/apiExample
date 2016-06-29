@@ -1,0 +1,15 @@
+{
+  "/address": {
+    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "action":"getAddresses",
+    "method": "GET"
+  },
+  "/address/:id": {
+    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "method": "GET",
+    "action":"getAddress",
+    "params": {
+      ":id": "([0-9]+)"
+    }
+  }
+}

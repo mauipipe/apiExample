@@ -1,6 +1,7 @@
 <?php
 
 namespace Addresses\Service;
+
 use Addresses\Repository\AddressDbInterface;
 
 /**
@@ -25,5 +26,10 @@ class AddressService
     public function getAddresses()
     {
         return $this->addressesRepo->fetchAddresses();
+    }
+
+    public function getAddress(array $getQueryParams)
+    {
+        return $this->addressesRepo->fetchAddressByParams($getQueryParams);
     }
 }

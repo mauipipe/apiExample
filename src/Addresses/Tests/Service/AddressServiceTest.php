@@ -1,6 +1,7 @@
 <?php
 namespace Addresses\Tests\Service;
 
+use Addresses\Http\Request;
 use Addresses\Repository\AddressDbInterface;
 use Addresses\Service\AddressService;
 
@@ -33,7 +34,7 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function retrievesStoredAddresses()
+    public function retrievesStoredAddressesList()
     {
         $expectedResult = ['test'];
 
@@ -42,6 +43,26 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
             ->willReturn($expectedResult);
 
         $result = $this->addressService->getAddresses();
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function retrievesAddressByGivenParams()
+    {
+        $expectedResult = ['test'];
+
+        $id = 1;
+        $request = new Request();
+        $request->addParam('id', $id);
+
+        $this->addressRepository->expects($this->once())
+            ->method('fetchAddress')
+            ->with($id)
+            ->willReturn($expectedResult);
+
+        $result = $this->addressService->getAddress($request->getQueryParams());
         $this->assertEquals($expectedResult, $result);
     }
 }
