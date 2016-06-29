@@ -10,8 +10,8 @@ namespace Addresses\Router;
 
 
 use Addresses\Config\Config;
-use Addresses\DbConnection\DbConnector;
 use Addresses\Http\Request;
+use Addresses\Tests\Mock\Factory\MockFactory;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,12 +19,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      * @var Config
      */
     private $config;
-    /**
-     * @var Request
-     */
-    private $request;
-
-    private static $dbConnection;
 
     /**
      * @var Router
@@ -33,9 +27,8 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->config = new Config(__DIR__ .'/../Fixtures/route_test.json');
-        $this->request = new Request();
-        $this->router = new Router($this->config,$this->request,'test');
+        $this->config = new Config(__DIR__ . '/../Fixtures/route_test.json');
+        $this->router = new Router($this->config);
     }
 
     /**
@@ -45,9 +38,11 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['REQUEST_URI'] = '/address';
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $response = $this->router->dispatch();
+        $request = new Request();
 
-        $expectedResponse = '[{"name":"test","address":"mercy","nr":23},{"name":"test2","address":"mercy2","nr":45}]';
+        $response = $this->router->dispatch($request);
+
+        $expectedResponse = MockFactory::createMockResponse(null);
         $this->assertEquals($expectedResponse, $response);
     }
 
@@ -58,9 +53,12 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['REQUEST_URI'] = '/address/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $response = $this->router->dispatch();
+        $request = new Request();
+        $request->addParam('test', 'value');
 
-        $expectedResponse = '[{"name":"test","address":"mercy","nr":23}]';
+        $response = $this->router->dispatch($request);
+
+        $expectedResponse = MockFactory::createMockResponse($request->getQueryParams());
         $this->assertEquals($expectedResponse, $response);
     }
 
@@ -73,7 +71,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['REQUEST_URI'] = '/wrong';
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $result = $this->router->dispatch();
+
+        $request = new Request();
+        $result = $this->router->dispatch($request);
         $this->assertInstanceOf('Addresses\Controller\AddressController', $result);
     }
 }

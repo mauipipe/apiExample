@@ -14,47 +14,44 @@ use Addresses\Http\Request;
 
 class Router
 {
+
     const ROUTE = 'route';
+
     /**
      * @var Config
      */
     private $config;
-    /**
-     * @var Request
-     */
-    private $request;
-
-    private static $mandatoryParams = [Config::FACTORY, Config::ACTION];
 
     /**
      * Router constructor.
      * @param Config $config
-     * @param Request $request
      */
-    public function __construct(Config $config, Request $request)
+    public function __construct(Config $config)
     {
         $this->config = $config;
-        $this->request = $request;
     }
 
-    public function dispatch()
+    public function dispatch(Request $request)
     {
         $uri = $_SERVER['REQUEST_URI'];
-        $method = $this->request->getMethod();
+        $method = $request->getMethod();
 
         foreach ($this->config->getConfig() as $route => $configRow) {
             $this->checkMandatoryParams($configRow);
             $this->checkMethod($configRow, $method, $route);
             $placeHolders = $this->processRoute($configRow, $route);
 
-            $pattern = '@^' . $route . '$@';
+            $pattern = sprintf('@^%s$@', $route);
             $matches = [];
             if (preg_match($pattern, $uri, $matches)) {
-                $this->addPlaceHolderToRequest($placeHolders, $matches);
+                if (count($placeHolders) > 0) {
+                    $request->addPlaceholdersFromRoute($placeHolders, $matches);
+                }
 
-                return $this->dispatchAction($configRow);
+                return $this->dispatchAction($request, $configRow);
             }
         }
+
         throw new \RuntimeException(sprintf('Invalid route provided %s', $uri));
     }
 
@@ -77,11 +74,12 @@ class Router
      */
     protected function checkMandatoryParams($configRow)
     {
-        var_dump($configRow);
-        foreach (self::$mandatoryParams as $mandatoryParam) {
-            if (!isset($configRow[$mandatoryParam]) ) {
-                throw new \RuntimeException(sprintf('no %s set on route',$mandatoryParam));
-            }
+        if (!(isset($configRow[Config::CONTROLLER]) || isset($configRow[Config::FACTORY]))) {
+            throw new \RuntimeException('missing param controller or factory on config');
+        }
+
+        if (!isset($configRow[Config::ACTION])) {
+            throw new \RuntimeException('missing param action on config');
         }
     }
 
@@ -105,33 +103,21 @@ class Router
     }
 
     /**
-     * @param $placeHolders
-     * @param $matches
-     */
-    protected function addPlaceHolderToRequest(&$placeHolders, $matches)
-    {
-        if (count($placeHolders) > 0) {
-            foreach ($placeHolders as $key => $placeHolder) {
-                $this->request->addParam($placeHolder, $matches[0 + $key]);
-            }
-        }
-    }
-
-    /**
-     * @param $configRow
+     * @param Request $request
+     * @param array $configRow
      * @return mixed
      */
-    protected function dispatchAction($configRow)
+    protected function dispatchAction(Request $request, $configRow)
     {
-        if(isset($configRow[Config::FACTORY]) && class_exists($configRow[Config::FACTORY])){
+        if (isset($configRow[Config::FACTORY]) && class_exists($configRow[Config::FACTORY])) {
             $controllerName = $configRow[Config::FACTORY];
             /** @var FactoryInterface */
             $controller = $controllerName::create();
-        }else{
+        } else {
             $controllerName = $configRow[Config::CONTROLLER];
             $controller = new $controllerName();
         }
-        
-        return call_user_func_array([$controller, $configRow[Config::ACTION]], [$this->request]);
+
+        return call_user_func_array([$controller, $configRow[Config::ACTION]], [$request]);
     }
 }

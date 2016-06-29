@@ -3,11 +3,10 @@
 namespace Addresses\Tests\Mock;
 
 use Addresses\Http\Request;
-use Addresses\Http\Response;
 use Addresses\Tests\Mock\Factory\MockFactory;
 
 /**
- * @author davidcontavalli 
+ * @author davidcontavalli
  **/
 class AddressControllerMock
 {

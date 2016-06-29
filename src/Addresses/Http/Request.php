@@ -48,4 +48,15 @@ class Request
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    /**
+     * @param array $placeHolders
+     * @param $routeMatches
+     */
+    public function addPlaceholdersFromRoute(array $placeHolders, $routeMatches)
+    {
+        foreach ($placeHolders as $key => $placeHolder) {
+            $this->addParam($placeHolder, $routeMatches[++$key]);
+        }
+    }
+
 }
