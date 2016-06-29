@@ -6,5 +6,4 @@ vagrant/.vagrant
 .idea/modules.xml
 addresses.iml
 composer.lock
-config/
 vagrant/config/

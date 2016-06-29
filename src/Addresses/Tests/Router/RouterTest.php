@@ -9,8 +9,21 @@
 namespace Addresses\Router;
 
 
+use Addresses\Config\Config;
+use Addresses\Http\Request;
+
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Config
+     */
+    private $config;
+    /**
+     * @var Request
+     */
+    private $request;
+
+
     /**
      * @var Router
      */
@@ -18,7 +31,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->router = new Router();
+        $this->config = new Config(__DIR__ .'/../Fixtures/route_test.json');
+        $this->request = new Request();
+        $this->router = new Router($this->config,$this->request);
     }
 
     /**

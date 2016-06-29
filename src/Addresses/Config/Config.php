@@ -12,7 +12,10 @@ namespace Addresses\Config;
 class Config
 {
     const PARAMS = 'params';
-    
+    const FACTORY = 'factory';
+    const ACTION = 'action';
+
+
     private $configIterator;
 
     /**

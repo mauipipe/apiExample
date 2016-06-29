@@ -3,9 +3,9 @@ Feature:
   As a API user
   I should be able to retrieve addresses throw an endpoint
 
+  @multi_result
   Scenario: Retrieves a list of addresses
     When I send a "GET" request to "/address"
-    And print response
     Then I should have a "200" status code
     And the response should be:
     """
@@ -23,10 +23,9 @@ Feature:
     ]
     """
 
-  @wip
+  @single_result
   Scenario: Retrieves a list of addresses
     When I send a "GET" request to "/address/1"
-    And print response
     Then I should have a "200" status code
     And the response should be:
     """
