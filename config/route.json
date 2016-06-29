@@ -1,15 +1,23 @@
-{
-  "/address": {
+[
+  {
+    "route": "/address",
     "factory": "Addresses\\Factory\\AddressControllerFactory",
-    "action":"getAddresses",
+    "action": "getAddresses",
     "method": "GET"
   },
-  "/address/:id": {
+  {
+    "route": "/address",
+    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "action": "addAddresses",
+    "method": "POST"
+  },
+  {
+    "route": "/address/:id",
     "factory": "Addresses\\Factory\\AddressControllerFactory",
     "method": "GET",
-    "action":"getAddress",
+    "action": "getAddress",
     "params": {
       ":id": "([0-9]+)"
     }
   }
-}
+]

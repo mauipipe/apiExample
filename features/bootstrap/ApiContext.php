@@ -2,13 +2,11 @@
 
 use Addresses\DbConnection\DbConnector;
 use Addresses\Factory\AddressServiceFactory;
-use Addresses\Model\Address;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 
 class ApiContext implements Context, SnippetAcceptingContext
@@ -46,11 +44,11 @@ class ApiContext implements Context, SnippetAcceptingContext
      */
     public function thereAreTheFollowingAddressInTheSystem(TableNode $addressTable)
     {
-        foreach ($addressTable->getHash() as $item){
+        foreach ($addressTable->getHash() as $item) {
             $addressService = AddressServiceFactory::create();
             $addressService->addAddress($item);
         }
-        
+
     }
 
     /**
@@ -81,6 +79,15 @@ class ApiContext implements Context, SnippetAcceptingContext
     {
         $expectedResponse = json_decode($reponse->getRaw(), 1);
         PHPUnit_Framework_Assert::assertEquals($expectedResponse, json_decode($this->response->getBody()->getContents(), 1));
+    }
+
+    /**
+     * @When I send a :method request to :url with values:
+     */
+    public function iSendARequestToWithValues($method, $url, TableNode $tableBody)
+    {
+        $bodyData = $tableBody->getHash();
+        $this->response = $this->client->request($method, $url, ['form_params' => current($bodyData)]);
     }
 
     /**

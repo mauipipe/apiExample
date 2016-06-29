@@ -47,3 +47,35 @@ Feature:
       }
     ]
     """
+
+  @add_address
+  Scenario: Retrieves a list of addresses
+    When I send a "POST" request to "/address" with values:
+      | name | phone        | street       |
+      | Tom  | +49123221373 | Lane Steet 4 |
+    And print response
+    Then I should have a "201" status code
+    When I send a "GET" request to "/address"
+    And the response should be:
+    """
+    [
+      {
+      	"id": "1",
+      	"name": "Doug",
+      	"phone": "+491232213213",
+      	"street": "Lane Steet 2"
+      },
+      {
+      	"id": "2",
+      	"name": "Mary",
+      	"phone": "+491232213213",
+      	"street": "Lane Steet 5"
+      },
+      {
+      	"id": "3",
+      	"name": "Tom",
+      	"phone": "+49123221373",
+      	"street": "Lane Steet 4"
+      }
+    ]
+    """

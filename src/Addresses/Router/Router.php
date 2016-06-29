@@ -10,6 +10,7 @@ namespace Addresses\Router;
 
 use Addresses\Config\Config;
 use Addresses\Factory\FactoryInterface;
+use Addresses\Helper\ResponseHelper;
 use Addresses\Http\Request;
 
 class Router
@@ -36,14 +37,14 @@ class Router
         $uri = $_SERVER['REQUEST_URI'];
         $method = $request->getMethod();
 
-        foreach ($this->config->getConfig() as $route => $configRow) {
+        foreach ($this->config->getConfig() as $configRow) {
+            $route = $configRow[self::ROUTE];
             $this->checkMandatoryParams($configRow);
-            $this->checkMethod($configRow, $method, $route);
             $placeHolders = $this->processRoute($configRow, $route);
 
             $pattern = sprintf('@^%s$@', $route);
             $matches = [];
-            if (preg_match($pattern, $uri, $matches)) {
+            if (preg_match($pattern, $uri, $matches) && $this->hasValidMethod($configRow, $method)) {
                 if (count($placeHolders) > 0) {
                     $request->addPlaceholdersFromRoute($placeHolders, $matches);
                 }
@@ -52,20 +53,17 @@ class Router
             }
         }
 
-        throw new \RuntimeException(sprintf('Invalid route provided %s', $uri));
+        return ResponseHelper::getInvalidRouteExceptionResponse($uri);
     }
 
     /**
      * @param $configRow
      * @param $method
-     * @param $uri
-     * @throws \HttpRequestException
+     * @return bool
      */
-    private function checkMethod($configRow, $method, $uri)
+    protected function hasValidMethod($configRow, $method)
     {
-        if ($configRow['method'] !== $method) {
-            throw new \HttpRequestException('wrong method %s provided for this route %s', $method, $uri);;
-        }
+        return ($configRow['method'] === $method);
     }
 
     /**

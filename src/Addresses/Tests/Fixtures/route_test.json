@@ -1,15 +1,17 @@
-{
-  "/address": {
+[
+  {
+    "route": "/address",
     "controller": "Addresses\\Tests\\Mock\\AddressControllerMock",
-    "action":"getAddresses",
+    "action": "getAddresses",
     "method": "GET"
   },
-  "/address/:id": {
+  {
+    "route": "/address/:id",
     "controller": "Addresses\\Tests\\Mock\\AddressControllerMock",
     "method": "GET",
-    "action":"getAddress",
+    "action": "getAddress",
     "params": {
       ":id": "([0-9]+)"
     }
   }
-}
+]

@@ -10,6 +10,7 @@ namespace Addresses\Router;
 
 
 use Addresses\Config\Config;
+use Addresses\Helper\ResponseHelper;
 use Addresses\Http\Request;
 use Addresses\Tests\Mock\Factory\MockFactory;
 
@@ -64,16 +65,15 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     *
-     * @expectedException \RuntimeException
      */
     public function throwsAnExceptionWhenNoRouteIsFound()
     {
+        $uri = '/wrong';
         $_SERVER['REQUEST_URI'] = '/wrong';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $request = new Request();
         $result = $this->router->dispatch($request);
-        $this->assertInstanceOf('Addresses\Controller\AddressController', $result);
+        $this->assertEquals(ResponseHelper::getInvalidRouteExceptionResponse($uri), $result);
     }
 }

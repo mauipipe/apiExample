@@ -59,4 +59,12 @@ class Request
         }
     }
 
+    /**
+     * @return array
+     */
+    public function getPost()
+    {
+        return $_POST;
+    }
+
 }

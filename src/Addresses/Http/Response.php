@@ -7,7 +7,7 @@
 namespace Addresses\Http;
 
 
-class Response
+class Response implements ResponseInterface
 {
     /**
      * @var array
@@ -33,22 +33,33 @@ class Response
         $this->headers = [];
     }
 
+    /**
+     * @return string
+     */
     public function getStatusCode()
     {
         return $this->statusCode;
     }
 
-    public function send()
+    /**
+     * @return string
+     */
+    public function getBody()
     {
-
         return json_encode($this->data);
     }
 
+    /**
+     * @param string $httpHeader
+     */
     public function setHeader($httpHeader)
     {
         $this->headers[] = $httpHeader;
     }
 
+    /**
+     * @return string
+     */
     public function getHeader()
     {
         return implode(' ', $this->headers);
