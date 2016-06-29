@@ -8,9 +8,23 @@
 
 namespace Addresses\Repository;
 
+use Addresses\Model\Address;
+
 interface AddressDbInterface
 {
+    /**
+     * @return mixed
+     */
     public function fetchAddresses();
 
-    public function fetchAddressByParams($getQueryParams);
+    /**
+     * @param array $getQueryParams
+     * @return mixed
+     */
+    public function fetchAddressByParams(array $getQueryParams);
+
+    /**
+     * @param Address $address
+     */
+    public function addAddress(Address $address);
 }

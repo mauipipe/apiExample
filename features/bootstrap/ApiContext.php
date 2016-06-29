@@ -1,8 +1,12 @@
 <?php
 
+use Addresses\DbConnection\DbConnector;
+use Addresses\Factory\AddressServiceFactory;
+use Addresses\Model\Address;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
+use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -27,6 +31,26 @@ class ApiContext implements Context, SnippetAcceptingContext
     public function __construct($client, $baseUri)
     {
         $this->client = new $client(['base_uri' => $baseUri]);
+    }
+
+    /**
+     * @Given the system is empty
+     */
+    public function theSystemIsEmpty()
+    {
+        DbConnector::destroy();
+    }
+
+    /**
+     * @Given there are the following address in the system:
+     */
+    public function thereAreTheFollowingAddressInTheSystem(TableNode $addressTable)
+    {
+        foreach ($addressTable->getHash() as $item){
+            $addressService = AddressServiceFactory::create();
+            $addressService->addAddress($item);
+        }
+        
     }
 
     /**

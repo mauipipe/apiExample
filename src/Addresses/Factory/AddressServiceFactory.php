@@ -1,6 +1,6 @@
 <?php
 namespace Addresses\Factory;
-use Addresses\Repository\AddressRepository;
+
 use Addresses\Service\AddressService;
 
 /**
@@ -14,7 +14,7 @@ class AddressServiceFactory implements FactoryInterface
 
     public static function create()
     {
-        $addressRepository = new AddressRepository();
+        $addressRepository = AddressRepositoryFactory::create();
         return new AddressService($addressRepository);
     }
 }

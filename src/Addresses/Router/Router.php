@@ -77,9 +77,10 @@ class Router
      */
     protected function checkMandatoryParams($configRow)
     {
+        var_dump($configRow);
         foreach (self::$mandatoryParams as $mandatoryParam) {
-            if (!isset($configRow[$mandatoryParam])) {
-                throw new \RuntimeException('no action set on route');
+            if (!isset($configRow[$mandatoryParam]) ) {
+                throw new \RuntimeException(sprintf('no %s set on route',$mandatoryParam));
             }
         }
     }
@@ -122,9 +123,15 @@ class Router
      */
     protected function dispatchAction($configRow)
     {
-        $controllerName = $configRow[self::FACTORY];
-        /** @var FactoryInterface */
-        $controller = $controllerName::create();
-        return call_user_func_array([$controller, $configRow[self::ACTION]], [$this->request]);
+        if(isset($configRow[Config::FACTORY]) && class_exists($configRow[Config::FACTORY])){
+            $controllerName = $configRow[Config::FACTORY];
+            /** @var FactoryInterface */
+            $controller = $controllerName::create();
+        }else{
+            $controllerName = $configRow[Config::CONTROLLER];
+            $controller = new $controllerName();
+        }
+        
+        return call_user_func_array([$controller, $configRow[Config::ACTION]], [$this->request]);
     }
 }

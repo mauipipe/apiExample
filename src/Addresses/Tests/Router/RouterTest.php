@@ -10,6 +10,7 @@ namespace Addresses\Router;
 
 
 use Addresses\Config\Config;
+use Addresses\DbConnection\DbConnector;
 use Addresses\Http\Request;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
@@ -23,6 +24,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     private $request;
 
+    private static $dbConnection;
 
     /**
      * @var Router
@@ -33,7 +35,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $this->config = new Config(__DIR__ .'/../Fixtures/route_test.json');
         $this->request = new Request();
-        $this->router = new Router($this->config,$this->request);
+        $this->router = new Router($this->config,$this->request,'test');
     }
 
     /**

@@ -1,11 +1,13 @@
 {
   "/address": {
-    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "controller": "Addresses\\Tests\\Mock\\AddressControllerMock",
+    "factory":"";
     "action":"getAddresses",
     "method": "GET"
   },
   "/address/:id": {
-    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "controller": "Addresses\\Tests\\Mock\\AddressControllerMock",
+    "factory":"";
     "method": "GET",
     "action":"getAddress",
     "params": {

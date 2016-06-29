@@ -14,7 +14,7 @@ class Config
     const PARAMS = 'params';
     const FACTORY = 'factory';
     const ACTION = 'action';
-
+    const CONTROLLER = 'controller';
 
     private $configIterator;
 

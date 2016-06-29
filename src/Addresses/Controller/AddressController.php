@@ -6,7 +6,7 @@ use Addresses\Http\Request;
 use Addresses\Service\AddressService;
 
 /**
- * @author davidcontavalli <david.contavalli@lovoo.com>
+ * @author davidcontavalli 
  **/
 class AddressController
 {

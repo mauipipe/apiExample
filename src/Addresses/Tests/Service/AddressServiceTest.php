@@ -2,6 +2,7 @@
 namespace Addresses\Tests\Service;
 
 use Addresses\Http\Request;
+use Addresses\Model\Address;
 use Addresses\Repository\AddressDbInterface;
 use Addresses\Service\AddressService;
 
@@ -56,13 +57,37 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
         $id = 1;
         $request = new Request();
         $request->addParam('id', $id);
+        $queryParams = $request->getQueryParams();
 
         $this->addressRepository->expects($this->once())
-            ->method('fetchAddress')
-            ->with($id)
+            ->method('fetchAddressByParams')
+            ->with($queryParams)
             ->willReturn($expectedResult);
 
-        $result = $this->addressService->getAddress($request->getQueryParams());
+        $result = $this->addressService->getAddress($queryParams);
         $this->assertEquals($expectedResult, $result);
     }
+
+    /**
+     * @test
+     */
+    public function addAnAddress()
+    {
+        $request = new Request();
+        $addressData = [
+            'name' => 'test',
+            'street' => 'conny street',
+            'phone' => '1232132'
+        ];
+        foreach ($addressData as $key => $value) {
+            $request->addParam($key, $value);
+        }
+
+        $this->addressRepository->expects($this->once())
+            ->method('addAddress')
+            ->with(new Address($addressData));
+
+        $this->addressService->addAddress($request->getQueryParams());
+    }
+
 }

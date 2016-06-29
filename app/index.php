@@ -1,6 +1,6 @@
 <?php
 /**
- * @author davidcontavalli <david.contavalli@lovoo.com>
+ * @author davidcontavalli 
  */
 
 use Addresses\Config\Config;

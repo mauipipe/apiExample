@@ -1,5 +1,9 @@
 <?php
 namespace Addresses\Repository;
+
+use Addresses\Model\Address;
+use PDO;
+
 /**
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
@@ -8,31 +12,33 @@ namespace Addresses\Repository;
  */
 class AddressRepository implements AddressDbInterface
 {
+    /**
+     * @var \PDO
+     */
+    private $pdo;
 
     /**
      * AddressRepository constructor.
+     * @param \PDO $pdo
      */
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
+        $this->pdo = $pdo;
     }
 
     public function fetchAddresses()
     {
-        return [
-            [
-                "name" => "test",
-                "address" => "mercy",
-                "nr" => 23
-            ],
-            [
-                "name" => "test2",
-                "address" => "mercy2",
-                "nr" => 45
-            ]
-        ];
+        $query = $this->pdo->prepare('SELECT * FROM address');
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function fetchAddressByParams($getQueryParams)
+    /**
+     * @param $getQueryParams
+     * @return array
+     */
+    public function fetchAddressByParams(array $getQueryParams)
     {
         return [
             [
@@ -41,5 +47,13 @@ class AddressRepository implements AddressDbInterface
                 "nr" => 23
             ]
         ];
+    }
+
+    public function addAddress(Address $address)
+    {
+        $addressData = $address->getData();
+        $result = $this->pdo->prepare(
+            'INSERT INTO address (name, street, phone) VALUES(:name, :street, :phone)');
+        $result->execute($addressData);
     }
 }
