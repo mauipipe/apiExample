@@ -17,6 +17,7 @@ class Router
 {
 
     const ROUTE = 'route';
+    const PLACEHOLDER_SUFFIX = ':';
 
     /**
      * @var Config
@@ -48,7 +49,7 @@ class Router
                 if (count($placeHolders) > 0) {
                     $request->addPlaceholdersFromRoute($placeHolders, $matches);
                 }
-
+                
                 return $this->dispatchAction($request, $configRow);
             }
         }
@@ -94,6 +95,7 @@ class Router
         ) {
             foreach ($configRow[Config::PARAMS] as $key => $value) {
                 $route = str_replace($key, $value, $route);
+                $key = str_replace(self::PLACEHOLDER_SUFFIX, '', $key);
                 $placeHolders[] = $key;
             }
         }

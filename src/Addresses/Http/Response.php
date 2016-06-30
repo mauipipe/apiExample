@@ -1,11 +1,13 @@
 <?php
 
 /**
- * @author davidcontavalli 
+ * @author davidcontavalli
  */
 
 namespace Addresses\Http;
 
+
+use Addresses\Serializer\SerializeInterface;
 
 class Response implements ResponseInterface
 {
@@ -46,7 +48,14 @@ class Response implements ResponseInterface
      */
     public function getBody()
     {
-        return json_encode($this->data);
+        $body = [];
+        foreach ($this->data as $key => $item) {
+            if ($item instanceof SerializeInterface) {
+                $item = $item->getData();
+            }
+            $body[$key] = $item;
+        }
+        return json_encode($body);
     }
 
     /**

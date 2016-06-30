@@ -49,11 +49,41 @@ class AddressRepository implements AddressDbInterface
         ];
     }
 
+    /**
+     * @param Address $address
+     */
     public function addAddress(Address $address)
     {
         $addressData = $address->getData();
         $result = $this->pdo->prepare(
-            'INSERT INTO address (name, street, phone) VALUES(:name, :street, :phone)');
+            'INSERT INTO address (name, street, phone) VALUES(:name, :street, :phone)'
+        );
         $result->execute($addressData);
+    }
+
+    /**
+     * @param Address $address
+     *
+     * @return array
+     */
+    public function updateAddress(Address $address)
+    {
+        $addressData = $address->getData();
+        $setQuery = [];
+        foreach ($addressData as $key => $value) {
+            $setQuery[] = sprintf('%s = :%s', $key, $key);
+        }
+        $query = 'UPDATE address SET ' . implode(', ', $setQuery) . ' WHERE id = :id';
+        $result = $this->pdo->prepare($query);
+
+        $mappedParams = [];
+        foreach (array_keys($addressData) as $key) {
+            $mappedParams[':' . $key] = $addressData[$key];
+        }
+        $mappedParams[':id'] = $address->getId();
+
+        $result->execute($mappedParams);
+
+        return $addressData;
     }
 }

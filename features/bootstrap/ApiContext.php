@@ -87,7 +87,7 @@ class ApiContext implements Context, SnippetAcceptingContext
     public function iSendARequestToWithValues($method, $url, TableNode $tableBody)
     {
         $bodyData = $tableBody->getHash();
-        $this->response = $this->client->request($method, $url, ['form_params' => current($bodyData)]);
+        $this->response = $this->client->request($method, $url, ['json' => current($bodyData)]);
     }
 
     /**

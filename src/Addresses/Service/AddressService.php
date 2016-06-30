@@ -6,7 +6,7 @@ use Addresses\Model\Address;
 use Addresses\Repository\AddressDbInterface;
 
 /**
- * @author davidcontavalli 
+ * @author davidcontavalli
  */
 class AddressService
 {
@@ -29,7 +29,13 @@ class AddressService
      */
     public function getAddresses()
     {
-        return $this->addressesRepo->fetchAddresses();
+        $result = $this->addressesRepo->fetchAddresses();
+        $addresses = [];
+        foreach ($result as $addressData) {
+            $address = $this->createAddress($addressData);
+            $addresses[] = $address;
+        }
+        return $addresses;
     }
 
     /**
@@ -38,7 +44,8 @@ class AddressService
      */
     public function getAddress(array $getQueryParams)
     {
-        return $this->addressesRepo->fetchAddressByParams($getQueryParams);
+        $result = $this->addressesRepo->fetchAddressByParams($getQueryParams);
+        return$this->createAddress($result);
     }
 
     /**
@@ -48,5 +55,28 @@ class AddressService
     {
         $address = new Address($getQueryParams);
         $this->addressesRepo->addAddress($address);
+    }
+
+    /**
+     * @param $id
+     * @param array $addressData
+     */
+    public function updateAddress($id, array $addressData)
+    {
+        $address = new Address($addressData);
+        $address->setId($id);
+
+        $this->addressesRepo->updateAddress($address);
+    }
+
+    /**
+     * @param $addressData
+     * @return Address
+     */
+    protected function createAddress($addressData)
+    {
+        $address = new Address($addressData);
+        $address->setId($addressData['id']);
+        return $address;
     }
 }

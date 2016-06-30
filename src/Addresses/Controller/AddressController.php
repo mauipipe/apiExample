@@ -45,6 +45,10 @@ class AddressController
         return new Response($this->addressService->getAddress($params), StatusCodes::SUCCESS_200, 'json');
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function addAddresses(Request $request)
     {
         $postBody = $request->getPost();
@@ -57,4 +61,20 @@ class AddressController
         }
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function updateAddress(Request $request)
+    {
+        $body = $request->getPutBody();
+        $id = $request->getParam("id");
+
+        try {
+            $this->addressService->updateAddress($id, $body);
+            return new Response(['status' => 'updated'], StatusCodes::SUCCESS_200, 'json');
+        } catch (\PDOException $e) {
+            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+        }
+    }
 }

@@ -1,17 +1,21 @@
 <?php
 
 /**
- * @author davidcontavalli 
+ * @author davidcontavalli
  */
 
 namespace Addresses\Model;
 
 
-class Address
+use Addresses\Serializer\SerializeInterface;
+
+class Address implements SerializeInterface
 {
     const NAME = 'name';
     const PHONE = 'phone';
     const STREET = 'street';
+    const ID = 'id';
+
     /**
      * @var string
      */
@@ -24,6 +28,10 @@ class Address
      * @var string
      */
     private $phone;
+    /**
+     * @var
+     */
+    private $id = null;
 
     /**
      * @param array $addressData
@@ -83,12 +91,33 @@ class Address
         $this->street = $street;
     }
 
+    /**
+     * @return array
+     */
     public function getData()
     {
-        return [
+        $addressData = [
             self::NAME => $this->name,
             self::PHONE => $this->phone,
             self::STREET => $this->street,
         ];
+
+        return $addressData;
+    }
+
+    /**
+     * @param $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return null
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

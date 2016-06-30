@@ -62,4 +62,14 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::TEST_METHOD, $result);
     }
 
+    public function retrievesOneParameterbyKeyFromRequestParams()
+    {
+        $expectedResult = 'bar';
+        $key = 'foo';
+        $this->request->addParam($key, $expectedResult);
+        $result = $this->request->getParam($key);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
 }

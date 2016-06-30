@@ -27,4 +27,6 @@ interface AddressDbInterface
      * @param Address $address
      */
     public function addAddress(Address $address);
+
+    public function updateAddress(Address $address);
 }

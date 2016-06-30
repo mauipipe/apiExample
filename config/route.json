@@ -19,5 +19,14 @@
     "params": {
       ":id": "([0-9]+)"
     }
+  },
+  {
+    "route": "/address/:id",
+    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "method": "PUT",
+    "action": "updateAddress",
+    "params": {
+      ":id": "([0-9]+)"
+    }
   }
 ]

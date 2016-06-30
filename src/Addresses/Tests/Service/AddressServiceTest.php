@@ -90,4 +90,28 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
         $this->addressService->addAddress($request->getQueryParams());
     }
 
+    /**
+     * @test
+     */
+    public function updateAnAddress()
+    {
+        $request = new Request();
+        $addressData = [
+            'name' => 'test',
+            'street' => 'conny street',
+            'phone' => '1232132'
+        ];
+        $id = 1;
+        foreach ($addressData as $key => $value) {
+            $request->addParam($key, $value);
+        }
+        $address = new Address($addressData);
+        $address->setId($id);
+
+        $this->addressRepository->expects($this->once())
+            ->method('updateAddress')
+            ->with($address);
+
+        $this->addressService->updateAddress($id,$request->getQueryParams());
+    }
 }

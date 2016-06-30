@@ -67,4 +67,21 @@ class Request
         return $_POST;
     }
 
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getParam($key)
+    {
+        return $this->queryParams[$key];
+    }
+
+    /**
+     * @return array
+     */
+    public function getPutBody()
+    {
+        return json_decode(file_get_contents('php://input'), true);
+    }
 }
