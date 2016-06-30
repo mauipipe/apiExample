@@ -99,10 +99,8 @@ Feature:
   @delete_address
   Scenario: Delete existing address
     When I send a "DELETE" request to "/address/1"
-    And print response
-    Then I should have a "200" status code
-    When I send a "GET" request to "/address"
-    And print response
+    Then I should have a "204" status code
+    And I send a "GET" request to "/address"
     And the response should be:
     """
     [

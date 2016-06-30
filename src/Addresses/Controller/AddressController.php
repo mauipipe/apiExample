@@ -89,7 +89,7 @@ class AddressController
 
         try {
             $this->addressService->deleteAddress($id);
-            return new Response(['status' => 'deleted'], StatusCodes::SUCCESS_200, 'json');
+            return new Response(['status' => 'deleted'], StatusCodes::DELETE_SUCCESS_204, 'json');
         } catch (\PDOException $e) {
             return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
         }
