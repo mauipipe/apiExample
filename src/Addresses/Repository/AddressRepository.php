@@ -86,4 +86,15 @@ class AddressRepository implements AddressDbInterface
 
         return $addressData;
     }
+
+    /**
+     * @param int $id
+     */
+    public function deleteAddress($id)
+    {
+        $query = 'DELETE FROM address WHERE id = :id';
+        $result = $this->pdo->prepare($query);
+
+        $result->execute([':id' => $id]);
+    }
 }

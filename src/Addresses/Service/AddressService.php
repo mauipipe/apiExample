@@ -45,7 +45,7 @@ class AddressService
     public function getAddress(array $getQueryParams)
     {
         $result = $this->addressesRepo->fetchAddressByParams($getQueryParams);
-        return$this->createAddress($result);
+        return $this->createAddress($result);
     }
 
     /**
@@ -69,6 +69,13 @@ class AddressService
         $this->addressesRepo->updateAddress($address);
     }
 
+    /**
+     * @param $id
+     */
+    public function deleteAddress($id)
+    {
+        $this->addressesRepo->deleteAddress($id);
+    }
     /**
      * @param $addressData
      * @return Address

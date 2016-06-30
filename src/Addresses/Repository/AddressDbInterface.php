@@ -28,5 +28,14 @@ interface AddressDbInterface
      */
     public function addAddress(Address $address);
 
+    /**
+     * @param Address $address
+     * @return array
+     */
     public function updateAddress(Address $address);
+
+    /**
+     * @param int $id
+     */
+    public function deleteAddress($id);
 }

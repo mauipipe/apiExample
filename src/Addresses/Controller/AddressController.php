@@ -77,4 +77,20 @@ class AddressController
             return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
         }
     }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAddress(Request $request)
+    {
+        $id = $request->getParam("id");
+
+        try {
+            $this->addressService->deleteAddress($id);
+            return new Response(['status' => 'deleted'], StatusCodes::SUCCESS_200, 'json');
+        } catch (\PDOException $e) {
+            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+        }
+    }
 }

@@ -28,5 +28,14 @@
     "params": {
       ":id": "([0-9]+)"
     }
+  },
+  {
+    "route": "/address/:id",
+    "factory": "Addresses\\Factory\\AddressControllerFactory",
+    "method": "DELETE",
+    "action": "deleteAddress",
+    "params": {
+      ":id": "([0-9]+)"
+    }
   }
 ]
