@@ -42,7 +42,8 @@ class AddressController
     public function getAddress(Request $request)
     {
         $params = $request->getQueryParams();
-        return new Response($this->addressService->getAddress($params), StatusCodes::SUCCESS_200, 'json');
+        $address = $this->addressService->getAddress($params);
+        return new Response([$address], StatusCodes::SUCCESS_200, 'json');
     }
 
     /**

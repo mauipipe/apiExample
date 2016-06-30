@@ -35,18 +35,23 @@ class AddressRepository implements AddressDbInterface
     }
 
     /**
-     * @param $getQueryParams
-     * @return array
+     * @param array $queryParams
+     * @return bool
      */
-    public function fetchAddressByParams(array $getQueryParams)
+    public function fetchAddressByParams(array $queryParams)
     {
-        return [
-            [
-                "name" => "test",
-                "address" => "mercy",
-                "nr" => 23
-            ]
-        ];
+        $whereQueryParts = [];
+        foreach ($queryParams as $key => $value) {
+            $whereQueryParts[] = sprintf('%s=:%s', $key, $key);
+        }
+        $whereQuery = implode(' AND ', $whereQueryParts);
+        $mappedParams = $this->getMappedParams($queryParams);
+
+        $query = 'SELECT *  FROM address WHERE ' . $whereQuery;
+        $result = $this->pdo->prepare($query);
+        $result->execute($mappedParams);
+
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -76,10 +81,7 @@ class AddressRepository implements AddressDbInterface
         $query = 'UPDATE address SET ' . implode(', ', $setQuery) . ' WHERE id = :id';
         $result = $this->pdo->prepare($query);
 
-        $mappedParams = [];
-        foreach (array_keys($addressData) as $key) {
-            $mappedParams[':' . $key] = $addressData[$key];
-        }
+        $mappedParams = $this->getMappedParams($addressData);
         $mappedParams[':id'] = $address->getId();
 
         $result->execute($mappedParams);
@@ -96,5 +98,18 @@ class AddressRepository implements AddressDbInterface
         $result = $this->pdo->prepare($query);
 
         $result->execute([':id' => $id]);
+    }
+
+    /**
+     * @param $addressData
+     * @return array
+     */
+    protected function getMappedParams($addressData)
+    {
+        $mappedParams = [];
+        foreach (array_keys($addressData) as $key) {
+            $mappedParams[':' . $key] = $addressData[$key];
+        }
+        return $mappedParams;
     }
 }
