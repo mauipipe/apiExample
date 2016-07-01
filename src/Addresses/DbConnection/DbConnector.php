@@ -6,6 +6,7 @@
 
 namespace Addresses\DbConnection;
 
+use Addresses\Config\Config;
 use PDO;
 
 class DbConnector
@@ -15,7 +16,14 @@ class DbConnector
      */
     public static function initDb()
     {
-        $pdo = new \PDO('mysql:host=localhost;dbname=address;charset=utf8mb4', 'user', '123456');
+        $config = new Config(__DIR__ . '/../../../config/db.json');
+        $configData = $config->getConfig();
+        $dsn = sprintf(
+            '%s:host=%s;dbname=%s;charset=%s',
+            $configData['type'], $configData['host'], $configData['database'], $configData['charset']
+        );
+
+        $pdo = new \PDO($dsn, $configData['user'], $configData['password']);
         $pdo->exec("SET CHARACTER SET utf8");      // Sets encoding UTF-8
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
