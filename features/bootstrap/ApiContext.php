@@ -7,6 +7,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Response;
 
 class ApiContext implements Context, SnippetAcceptingContext
@@ -93,7 +94,11 @@ class ApiContext implements Context, SnippetAcceptingContext
         }
 
         $bodyData = $tableBody->getHash();
-        $this->response = $this->client->request($method, $url, [$bodyType => current($bodyData)]);
+        try {
+            $this->response = $this->client->request($method, $url, [$bodyType => current($bodyData)]);
+        } catch (ClientException $e) {
+            $this->response = $e->getResponse();
+        }
     }
 
     /**

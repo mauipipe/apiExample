@@ -73,6 +73,18 @@ Feature:
     ]
     """
 
+  @invalid_data @add_address
+  Scenario: return a 400 malformed address
+    When I send a "POST" request to "/address" with values:
+      | name | phone             | street       |
+      | Tom  | +4912322137333434 | Lane Steet 4 |
+    Then I should have a "400" status code
+    And the response should be:
+    """
+    {"error":"invalid phone number +4912322137333434"}
+    """
+
+
   @update_address
   Scenario: Update existing address
     When I send a "PUT" request to "/address/1" with values:

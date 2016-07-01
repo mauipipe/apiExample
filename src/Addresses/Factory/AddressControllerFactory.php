@@ -10,6 +10,7 @@ namespace Addresses\Factory;
 
 
 use Addresses\Controller\AddressController;
+use Addresses\Validator\ValidatorConsumer;
 
 class AddressControllerFactory implements FactoryInterface
 {
@@ -19,6 +20,6 @@ class AddressControllerFactory implements FactoryInterface
     public static function create()
     {
         $addressService = AddressServiceFactory::create();
-        return new AddressController($addressService);
+        return new AddressController($addressService, new ValidatorConsumer());
     }
 }
