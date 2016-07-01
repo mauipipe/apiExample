@@ -10,6 +10,11 @@ sudo apt-get -y upgrade
 #  php 5.5
 sudo apt-get install -y php5 nginx php5-fpm php5-cli
 
+# preparing swap
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=512k
+mkswap /swapfile
+swapon /swapfile
+
 VHOST=$(cat <<EOF
 server {
     server_name localhost;
@@ -52,14 +57,10 @@ EOF
 )
 
 echo "${VHOST}" > /etc/nginx/sites-available/address.local
-sudo ln -s /etc/nginx/sites-available/address.local /etc/nginx/sites-enabled/address.local
+sudo ln -s /etc/nginx/sites-available/address.local /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
 sudo service nginx restart
 
-# preparing swap
-sudo dd if=/dev/zero of=/swapfile bs=1024 count=512k
-mkswap /swapfile
-swapon /swapfile
 
 # install mysql and give password to installer
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PASSWORD"
