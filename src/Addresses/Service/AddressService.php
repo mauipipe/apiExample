@@ -58,8 +58,9 @@ class AddressService
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param array $addressData
+     * @return Address
      */
     public function updateAddress($id, array $addressData)
     {
@@ -67,6 +68,7 @@ class AddressService
         $address->setId($id);
 
         $this->addressesRepo->updateAddress($address);
+        return $address;
     }
 
     /**
@@ -76,6 +78,7 @@ class AddressService
     {
         $this->addressesRepo->deleteAddress($id);
     }
+
     /**
      * @param $addressData
      * @return Address

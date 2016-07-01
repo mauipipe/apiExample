@@ -5,7 +5,7 @@ Feature:
 
   Background:
     Given the system is empty
-    Given there are the following address in the system:
+    And there are the following address in the system:
       | name | phone         | street       |
       | Doug | +491232213213 | Lane Steet 2 |
       | Mary | +491232213213 | Lane Steet 5 |

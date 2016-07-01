@@ -4,6 +4,7 @@ namespace Addresses\Controller;
 
 use Addresses\Enum\StatusCodes;
 use Addresses\Exception\ValidationException;
+use Addresses\Http\Factory\ResponseFactoryConsumer;
 use Addresses\Http\Request;
 use Addresses\Http\Response;
 use Addresses\Http\ResponseInterface;
@@ -23,15 +24,21 @@ class AddressController
      * @var ValidatorConsumer
      */
     private $validatorConsumer;
+    /**
+     * @var ResponseFactoryConsumer
+     */
+    private $responseFactoryConsumer;
 
     /**
      * @param AddressService $addressService
      * @param ValidatorConsumer $validatorConsumer
+     * @param ResponseFactoryConsumer $responseFactoryConsumer
      */
-    public function __construct(AddressService $addressService, ValidatorConsumer $validatorConsumer)
+    public function __construct(AddressService $addressService, ValidatorConsumer $validatorConsumer, ResponseFactoryConsumer $responseFactoryConsumer)
     {
         $this->addressService = $addressService;
         $this->validatorConsumer = $validatorConsumer;
+        $this->responseFactoryConsumer = $responseFactoryConsumer;
     }
 
     /**
@@ -50,7 +57,8 @@ class AddressController
     {
         $params = $request->getQueryParams();
         $address = $this->addressService->getAddress($params);
-        return new Response([$address], StatusCodes::SUCCESS_200, 'json');
+
+        return $this->responseFactoryConsumer->create('json', [$address], StatusCodes::SUCCESS_200);
     }
 
     /**
@@ -65,13 +73,14 @@ class AddressController
         try {
             $this->validatorConsumer->validate($postBody);
             $this->addressService->addAddress($postBody);
-            return new Response(['status' => 'added'], StatusCodes::ADD_SUCCESS_201, 'json');
+
+            return $this->responseFactoryConsumer->create('json', ['status' => 'added'], StatusCodes::ADD_SUCCESS_201);
         } catch (\PDOException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500);
         } catch (ValidationException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::BAD_REQUEST_400, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::BAD_REQUEST_400);
         } catch (\RuntimeException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500);
         }
     }
 
@@ -87,14 +96,15 @@ class AddressController
 
         try {
             $this->validatorConsumer->validate($body);
-            $this->addressService->updateAddress($id, $body);
-            return new Response(['status' => 'updated'], StatusCodes::SUCCESS_200, 'json');
+            $address = $this->addressService->updateAddress($id, $body);
+
+            return $this->responseFactoryConsumer->create('json', ['address' => $address->getData()], StatusCodes::SUCCESS_200);
         } catch (\PDOException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500);
         } catch (ValidationException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::BAD_REQUEST_400, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::BAD_REQUEST_400);
         } catch (\RuntimeException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500);
         }
     }
 
@@ -108,9 +118,10 @@ class AddressController
 
         try {
             $this->addressService->deleteAddress($id);
-            return new Response(['status' => 'deleted'], StatusCodes::DELETE_SUCCESS_204, 'json');
+            
+            return $this->responseFactoryConsumer->create('json', ['status' => 'deleted'], StatusCodes::DELETE_SUCCESS_204);
         } catch (\PDOException $e) {
-            return new Response(['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500, 'json');
+            return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500);
         }
     }
 }
