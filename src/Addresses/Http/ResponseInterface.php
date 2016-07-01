@@ -23,7 +23,7 @@ interface ResponseInterface
     public function getBody();
 
     /**
-     * @return string
+     * @return array
      */
-    public function getHeader();
+    public function getHeaders();
 }

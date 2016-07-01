@@ -67,10 +67,10 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getHeader()
+    public function getHeaders()
     {
-        return implode(' ', $this->headers);
+        return $this->headers;
     }
 }
