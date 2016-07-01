@@ -2,6 +2,8 @@
 namespace Addresses\Tests\Service;
 
 use Addresses\Http\Request;
+use Addresses\Hydrator\AddressHydrator;
+use Addresses\Hydrator\HydratorInterface;
 use Addresses\Model\Address;
 use Addresses\Repository\AddressDbInterface;
 use Addresses\Service\AddressService;
@@ -20,6 +22,11 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
      */
     private $addressService;
     /**
+     * @var HydratorInterface
+     */
+    private $addressHydrator;
+
+    /**
      * @var AddressDbInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $addressRepository;
@@ -29,8 +36,9 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
         $this->addressRepository = $this->getMockBuilder('Addresses\Repository\AddressDbInterface')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->addressHydrator = new AddressHydrator();
 
-        $this->addressService = new AddressService($this->addressRepository);
+        $this->addressService = new AddressService($this->addressRepository,$this->addressHydrator);
     }
 
     /**
