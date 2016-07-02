@@ -1,5 +1,7 @@
 CREATE DATABASE `address`;
 
+USE 'address';
+
 CREATE USER 'user'@'localhost'
   IDENTIFIED BY '123456';
 
