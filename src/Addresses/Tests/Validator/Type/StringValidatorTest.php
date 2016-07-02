@@ -1,6 +1,7 @@
 <?php
 
 namespace Addresses\Tests\Validator\Types;
+
 use Addresses\Validator\Type\StringValidator;
 
 /**
@@ -14,7 +15,7 @@ class StringValidatorTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provider
      *
      * @param mixed $value
-     * @param boolean $expectedResult
+     * @param bool  $expectedResult
      */
     public function checksIfConsumedValueIsValidString($value, $expectedResult)
     {
@@ -29,7 +30,7 @@ class StringValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['asdsdsdwd', true],
-            [12323, false]
+            [12323, false],
         ];
     }
 }

@@ -9,7 +9,7 @@ class ResponseDispatcher
 {
     public static function dispatch(ResponseInterface $response)
     {
-        foreach ($response->getHeaders() as $header){
+        foreach ($response->getHeaders() as $header) {
             header($header);
         }
 

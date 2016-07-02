@@ -29,13 +29,14 @@ trait StrategyInitializableTrait
      */
     protected function createStrategy($namespace)
     {
-        $strategyClassName = $namespace . '\\' . ucfirst($this->strategy);
+        $strategyClassName = $namespace.'\\'.ucfirst($this->strategy);
         if (null === $this->strategy || !class_exists($strategyClassName)) {
             throw new \RuntimeException(sprintf('No valid strategy set %s', $strategyClassName));
         }
 
         /** @var ValidatorInterface $strategyClass */
         $strategyClass = new $strategyClassName();
+
         return $strategyClass;
     }
 }

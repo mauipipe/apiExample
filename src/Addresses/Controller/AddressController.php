@@ -30,8 +30,8 @@ class AddressController
     private $responseFactoryConsumer;
 
     /**
-     * @param AddressService $addressService
-     * @param ValidatorConsumer $validatorConsumer
+     * @param AddressService          $addressService
+     * @param ValidatorConsumer       $validatorConsumer
      * @param ResponseFactoryConsumer $responseFactoryConsumer
      */
     public function __construct(AddressService $addressService, ValidatorConsumer $validatorConsumer, ResponseFactoryConsumer $responseFactoryConsumer)
@@ -51,6 +51,7 @@ class AddressController
 
     /**
      * @param Request $request
+     *
      * @return ResponseInterface
      */
     public function getAddress(Request $request)
@@ -63,6 +64,7 @@ class AddressController
 
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function addAddresses(Request $request)
@@ -86,12 +88,13 @@ class AddressController
 
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function updateAddress(Request $request)
     {
         $body = $request->getPutBody();
-        $id = $request->getParam("id");
+        $id = $request->getParam('id');
         $this->validatorConsumer->setStrategy('addressValidator');
 
         try {
@@ -110,15 +113,16 @@ class AddressController
 
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function deleteAddress(Request $request)
     {
-        $id = $request->getParam("id");
+        $id = $request->getParam('id');
 
         try {
             $this->addressService->deleteAddress($id);
-            
+
             return $this->responseFactoryConsumer->create('json', ['status' => 'deleted'], StatusCodes::DELETE_SUCCESS_204);
         } catch (\PDOException $e) {
             return $this->responseFactoryConsumer->create('json', ['error' => $e->getMessage()], StatusCodes::SERVER_ERROR_500);

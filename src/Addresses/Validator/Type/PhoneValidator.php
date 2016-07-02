@@ -13,11 +13,13 @@ class PhoneValidator implements ValidatorTypeInterface
 
     /**
      * @param string $value
+     *
      * @return bool
      */
     public static function isValid($value)
     {
         $pattern = '/^(\+\d{1,3}[- ]?)?\d{10}$/';
-        return (bool)preg_match($pattern, $value);
+
+        return (bool) preg_match($pattern, $value);
     }
 }

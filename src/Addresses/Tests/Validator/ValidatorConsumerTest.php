@@ -51,8 +51,7 @@ class ValidatorConsumerTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null],
-            ['invalidStrategy']
+            ['invalidStrategy'],
         ];
     }
-
 }

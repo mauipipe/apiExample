@@ -3,11 +3,10 @@
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 19:11
+ * Time: 19:11.
  */
 
 namespace Addresses\Tests\Http;
-
 
 use Addresses\Http\Request;
 
@@ -71,5 +70,4 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedResult, $result);
     }
-
 }

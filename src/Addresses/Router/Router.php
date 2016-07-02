@@ -3,7 +3,7 @@
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 16:45
+ * Time: 16:45.
  */
 
 namespace Addresses\Router;
@@ -15,7 +15,6 @@ use Addresses\Http\Request;
 
 class Router
 {
-
     const ROUTE = 'route';
     const PLACEHOLDER_SUFFIX = ':';
 
@@ -26,6 +25,7 @@ class Router
 
     /**
      * Router constructor.
+     *
      * @param Config $config
      */
     public function __construct(Config $config)
@@ -49,7 +49,7 @@ class Router
                 if (count($placeHolders) > 0) {
                     $request->addPlaceholdersFromRoute($placeHolders, $matches);
                 }
-                
+
                 return $this->dispatchAction($request, $configRow);
             }
         }
@@ -60,15 +60,17 @@ class Router
     /**
      * @param $configRow
      * @param $method
+     *
      * @return bool
      */
     protected function hasValidMethod($configRow, $method)
     {
-        return ($configRow['method'] === $method);
+        return $configRow['method'] === $method;
     }
 
     /**
      * @param $configRow
+     *
      * @return mixed
      */
     protected function checkMandatoryParams($configRow)
@@ -85,6 +87,7 @@ class Router
     /**
      * @param string $configRow
      * @param string $route
+     *
      * @return array
      */
     protected function processRoute($configRow, &$route)
@@ -99,19 +102,21 @@ class Router
                 $placeHolders[] = $key;
             }
         }
+
         return $placeHolders;
     }
 
     /**
      * @param Request $request
-     * @param array $configRow
+     * @param array   $configRow
+     *
      * @return mixed
      */
     protected function dispatchAction(Request $request, $configRow)
     {
         if (isset($configRow[Config::FACTORY]) && class_exists($configRow[Config::FACTORY])) {
             $controllerName = $configRow[Config::FACTORY];
-            /** @var FactoryInterface */
+            /* @var FactoryInterface */
             $controller = $controllerName::create();
         } else {
             $controllerName = $configRow[Config::CONTROLLER];

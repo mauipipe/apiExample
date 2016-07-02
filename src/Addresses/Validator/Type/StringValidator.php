@@ -13,6 +13,7 @@ class StringValidator implements ValidatorTypeInterface
 
     /**
      * @param string $value
+     *
      * @return bool
      */
     public static function isValid($value)

@@ -10,13 +10,11 @@ use Addresses\Tests\Mock\Factory\MockFactory;
  **/
 class AddressControllerMock
 {
-
     /**
      * AddressController constructor.
      */
     public function __construct()
     {
-
     }
 
     public function getAddresses()
@@ -27,7 +25,7 @@ class AddressControllerMock
     public function getAddress(Request $request)
     {
         $data = $request->getQueryParams();
+
         return MockFactory::createMockResponse($data);
     }
-
 }

@@ -3,11 +3,10 @@
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 17:49
+ * Time: 17:49.
  */
 
 namespace Addresses\Config;
-
 
 class Config
 {
@@ -30,6 +29,9 @@ class Config
         $this->configIterator = new \ArrayIterator(json_decode($fileContent, true));
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     public function getConfig()
     {
         return $this->configIterator;

@@ -3,11 +3,10 @@
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 16:47
+ * Time: 16:47.
  */
 
 namespace Addresses\Router;
-
 
 use Addresses\Config\Config;
 use Addresses\Helper\ResponseHelper;
@@ -28,7 +27,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->config = new Config(__DIR__ . '/../Fixtures/route_test.json');
+        $this->config = new Config(__DIR__.'/../Fixtures/route_test.json');
         $this->router = new Router($this->config);
     }
 

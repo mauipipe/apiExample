@@ -9,7 +9,7 @@ use Addresses\Helper\QueryHelper;
 
 class QueryHelperTest extends \PHPUnit_Framework_TestCase
 {
-    private static $params = ['test' => 'test','test1' => 'test1'];
+    private static $params = ['test' => 'test', 'test1' => 'test1'];
 
     /**
      * @test
@@ -40,11 +40,10 @@ class QueryHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function createSetQueryFromArray()
     {
-        $params = ['test' => 'test','test1' => 'test1'];
+        $params = ['test' => 'test', 'test1' => 'test1'];
         $expectedResult = 'test = :test, test1 = :test1';
 
         $result = QueryHelper::createSetQuery($params);
         $this->assertEquals($expectedResult, $result);
     }
-
 }

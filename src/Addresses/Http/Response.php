@@ -6,7 +6,6 @@
 
 namespace Addresses\Http;
 
-
 use Addresses\Serializer\SerializeInterface;
 
 class Response implements ResponseInterface
@@ -55,6 +54,7 @@ class Response implements ResponseInterface
             }
             $body[$key] = $item;
         }
+
         return json_encode($body);
     }
 

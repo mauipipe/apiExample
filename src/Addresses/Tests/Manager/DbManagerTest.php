@@ -129,5 +129,4 @@ class DbManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->dbManager->executeDelete(self::TEST_TABLE, $id);
     }
-
 }

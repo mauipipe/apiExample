@@ -15,12 +15,12 @@ class PhoneValidatorTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provider
      * 
      * @param string $mobileNumber
-     * @param boolean $expectedResult
+     * @param bool   $expectedResult
      */
     public function checksWhenMobilePhoneNumberIsValid($mobileNumber, $expectedResult)
     {
         $result = PhoneValidator::isValid($mobileNumber);
-        $this->assertEquals($expectedResult,$result);
+        $this->assertEquals($expectedResult, $result);
     }
 
     /**
@@ -35,5 +35,4 @@ class PhoneValidatorTest extends \PHPUnit_Framework_TestCase
             ['+4912322137333434', false],
         ];
     }
-
 }

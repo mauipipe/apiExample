@@ -1,6 +1,7 @@
 <?php
 
 namespace Addresses\Validator;
+
 use Addresses\Strategy\StrategyInitializableTrait;
 
 /**
@@ -17,9 +18,8 @@ class ValidatorConsumer implements ValidatorInterface
      */
     public function validate(array $data)
     {
-        $strategyClass = $this->createStrategy(__NAMESPACE__ . '\\Strategy');
+        $strategyClass = $this->createStrategy(__NAMESPACE__.'\\Strategy');
+
         return $strategyClass->validate($data);
     }
-
-
 }

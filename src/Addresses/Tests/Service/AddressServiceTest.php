@@ -1,4 +1,5 @@
 <?php
+
 namespace Addresses\Tests\Service;
 
 use Addresses\Http\Request;
@@ -12,7 +13,7 @@ use Addresses\Service\AddressService;
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 16:08
+ * Time: 16:08.
  */
 class AddressServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +39,7 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->addressHydrator = new AddressHydrator();
 
-        $this->addressService = new AddressService($this->addressRepository,$this->addressHydrator);
+        $this->addressService = new AddressService($this->addressRepository, $this->addressHydrator);
     }
 
     /**
@@ -89,7 +90,7 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
         $addressData = [
             'name' => 'test',
             'street' => 'conny street',
-            'phone' => '1232132'
+            'phone' => '1232132',
         ];
         foreach ($addressData as $key => $value) {
             $request->addParam($key, $value);
@@ -111,7 +112,7 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
         $addressData = [
             'name' => 'test',
             'street' => 'conny street',
-            'phone' => '1232132'
+            'phone' => '1232132',
         ];
         $id = self::ADDRESSS_ID;
         foreach ($addressData as $key => $value) {
@@ -143,12 +144,14 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $queryResult
+     *
      * @return Address
      */
     protected function createAddress($queryResult)
     {
         $address = new Address($queryResult);
         $address->setId(self::ADDRESSS_ID);
+
         return $address;
     }
 }

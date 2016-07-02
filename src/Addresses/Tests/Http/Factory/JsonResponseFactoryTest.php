@@ -32,8 +32,7 @@ class JsonResponseFactoryTest extends \PHPUnit_Framework_TestCase
         $response = $this->jsonResponseFactory->create($expectedBody, self::TEST_STATUS_CODE);
 
         $this->assertEquals(self::TEST_STATUS_CODE, $response->getStatusCode());
-        $this->assertEquals(["Content-Type: application/json; charset=UTF-8"], $response->getHeaders());
+        $this->assertEquals(['Content-Type: application/json; charset=UTF-8'], $response->getHeaders());
         $this->assertEquals(json_encode($expectedBody), $response->getBody());
     }
-
 }

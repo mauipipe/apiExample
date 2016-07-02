@@ -3,7 +3,7 @@
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 16:24
+ * Time: 16:24.
  */
 
 namespace Addresses\Repository;
@@ -19,6 +19,7 @@ interface AddressDbInterface
 
     /**
      * @param array $getQueryParams
+     *
      * @return mixed
      */
     public function fetchAddressByParams(array $getQueryParams);
@@ -30,6 +31,7 @@ interface AddressDbInterface
 
     /**
      * @param Address $address
+     *
      * @return array
      */
     public function updateAddress(Address $address);

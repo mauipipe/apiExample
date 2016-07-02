@@ -6,7 +6,6 @@
 
 namespace Addresses\Tests\Mock\Factory;
 
-
 use Addresses\Http\Response;
 
 class MockFactory
@@ -16,7 +15,7 @@ class MockFactory
         if (null === $data) {
             $data = ['test'];
         }
+
         return new Response($data, $statusCode, $type);
     }
-
 }

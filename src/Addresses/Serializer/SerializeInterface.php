@@ -3,9 +3,7 @@
  * @author davidcontavalli 
  */
 
-
 namespace Addresses\Serializer;
-
 
 interface SerializeInterface
 {

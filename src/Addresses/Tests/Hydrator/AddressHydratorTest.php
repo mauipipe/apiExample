@@ -28,14 +28,13 @@ class AddressHydratorTest extends \PHPUnit_Framework_TestCase
             'id' => 1,
             'street' => 'test',
             'name' => 'test',
-            'phone' => '123213232'
+            'phone' => '123213232',
         ];
 
         $result = $this->addressHydrator->hydrate($data);
         foreach ($data as $key => $value) {
-            $accessor = 'get' . ucfirst($key);
+            $accessor = 'get'.ucfirst($key);
             $this->assertEquals($value, $result->$accessor());
         }
-
     }
 }

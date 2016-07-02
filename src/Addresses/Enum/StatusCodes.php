@@ -6,7 +6,6 @@
 
 namespace Addresses\Enum;
 
-
 class StatusCodes
 {
     const SUCCESS_200 = 200;

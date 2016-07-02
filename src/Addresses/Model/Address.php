@@ -6,7 +6,6 @@
 
 namespace Addresses\Model;
 
-
 use Addresses\Serializer\SerializeInterface;
 
 class Address implements SerializeInterface
@@ -114,7 +113,6 @@ class Address implements SerializeInterface
     }
 
     /**
-     * @return null
      */
     public function getId()
     {

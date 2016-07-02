@@ -29,5 +29,4 @@ class AddressValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->addressValidator->validate($requestData));
     }
-
 }

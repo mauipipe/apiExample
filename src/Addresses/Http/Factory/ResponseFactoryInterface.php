@@ -6,8 +6,7 @@
 
 namespace Addresses\Http\Factory;
 
-
 interface ResponseFactoryInterface
 {
-    public function create($data,$statusCode);
+    public function create($data, $statusCode);
 }

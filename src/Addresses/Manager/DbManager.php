@@ -6,7 +6,6 @@
 
 namespace Addresses\Manager;
 
-
 use Addresses\Helper\QueryHelper;
 use Addresses\Model\Address;
 use PDO;
@@ -30,14 +29,14 @@ class DbManager implements DbManagerInterface
 
     /**
      * @param string $table
-     * @param array $data
+     * @param array  $data
      */
     public function prepareSelect($table, $data = [])
     {
         $whereQuery = QueryHelper::createWhereQuery($data);
 
         $dbCol = sprintf('%s,%s,%s,%s', Address::ID, Address::NAME, Address::PHONE, Address::STREET);
-        $query = 'SELECT ' . $dbCol . '  FROM ' . $table . $whereQuery;
+        $query = 'SELECT '.$dbCol.'  FROM '.$table.$whereQuery;
 
         $statement = $this->pdo->prepare($query);
         $mappedParams = QueryHelper::getMappedParams($data);
@@ -48,7 +47,7 @@ class DbManager implements DbManagerInterface
 
     /**
      * @param string $table
-     * @param array $data
+     * @param array  $data
      */
     public function executeInsert($table, $data)
     {
@@ -56,20 +55,20 @@ class DbManager implements DbManagerInterface
         $mappedParams = QueryHelper::getMappedParams($data);
         $mappedKey = implode(',', array_keys($mappedParams));
 
-        $query = 'INSERT INTO ' . $table . ' (' . $dbCols . ') VALUES(' . $mappedKey . ')';
+        $query = 'INSERT INTO '.$table.' ('.$dbCols.') VALUES('.$mappedKey.')';
         $result = $this->pdo->prepare($query);
         $result->execute($mappedParams);
     }
 
     /**
      * @param string $table
-     * @param int $id
-     * @param array $data
+     * @param int    $id
+     * @param array  $data
      */
     public function executeUpdate($table, $id, array $data)
     {
         $setQuery = QueryHelper::createSetQuery($data);
-        $query = 'UPDATE ' . $table . ' SET ' . $setQuery . ' WHERE id = :id';
+        $query = 'UPDATE '.$table.' SET '.$setQuery.' WHERE id = :id';
         $result = $this->pdo->prepare($query);
         $mappedParams = QueryHelper::getMappedParams($data, [':id' => $id]);
 
@@ -78,11 +77,11 @@ class DbManager implements DbManagerInterface
 
     /**
      * @param string $table
-     * @param int $id
+     * @param int    $id
      */
     public function executeDelete($table, $id)
     {
-        $query = 'DELETE FROM ' . $table . ' WHERE id = :id';
+        $query = 'DELETE FROM '.$table.' WHERE id = :id';
         $result = $this->pdo->prepare($query);
 
         $result->execute([':id' => $id]);

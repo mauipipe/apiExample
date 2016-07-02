@@ -8,7 +8,6 @@ use Addresses\Model\Address;
 use Addresses\Validator\ValidatorInterface;
 use Addresses\Validator\ValidatorTypeInterface;
 
-
 /**
  * @author davidcontavalli
  */
@@ -22,7 +21,9 @@ class AddressValidator implements ValidatorInterface
 
     /**
      * @param array $data
+     *
      * @return bool
+     *
      * @throws ValidationException
      * @throws \Exception
      * @throws \HttpInvalidParamException
@@ -39,27 +40,33 @@ class AddressValidator implements ValidatorInterface
                 throw new ValidationException(sprintf($validatorTypeClass::$message, $data[$key]));
             };
         }
+
         return true;
     }
 
     /**
      * @param $validatorType
+     *
      * @return string
+     *
      * @throws \Exception
      */
     protected function getValidator($validatorType)
     {
-        $validatorTypeClass = 'Addresses\\Validator\\Type\\' . ucfirst($validatorType) . 'Validator';
+        $validatorTypeClass = 'Addresses\\Validator\\Type\\'.ucfirst($validatorType).'Validator';
         if (!class_exists($validatorTypeClass)) {
             throw new \Exception(sprintf('invalid validator type %s', $validatorTypeClass));
         }
+
         return $validatorTypeClass;
     }
 
     /**
      * @param array $data
      * @param $key
+     *
      * @return array
+     *
      * @throws \HttpInvalidParamException
      */
     protected function checkMandatoryParams(array $data, $key)
@@ -67,6 +74,7 @@ class AddressValidator implements ValidatorInterface
         if (!isset($data[$key])) {
             throw new \HttpInvalidParamException(sprintf('param %s not allowed', $key));
         }
+
         return $data;
     }
 }

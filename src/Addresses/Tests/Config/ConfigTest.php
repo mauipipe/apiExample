@@ -3,11 +3,10 @@
  * Created by IntelliJ IDEA.
  * User: davidcontavalli
  * Date: 27/06/16
- * Time: 17:51
+ * Time: 17:51.
  */
 
 namespace Addresses\Tests\Config;
-
 
 use Addresses\Config\Config;
 
@@ -20,7 +19,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->config = new Config(__DIR__ . '/../Fixtures/route_test.json');
+        $this->config = new Config(__DIR__.'/../Fixtures/route_test.json');
     }
 
     /**
@@ -42,5 +41,4 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     {
         $config = new Config('wrong configuration');
     }
-
 }

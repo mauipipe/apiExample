@@ -11,7 +11,7 @@ interface ResponseInterface
      * @return string
      */
     public function getStatusCode();
-    
+
     /**
      * @param string $httpHeader
      */
