@@ -28,7 +28,7 @@ class AddressServiceTest extends \PHPUnit_Framework_TestCase
     private $addressHydrator;
 
     /**
-     * @var AddressDbInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|AddressDbInterface
      */
     private $addressRepository;
 

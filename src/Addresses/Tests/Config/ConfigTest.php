@@ -39,6 +39,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function throwsAnExceptionWhenTheConsumedFilePathIsNotValid()
     {
-        $config = new Config('wrong configuration');
+        new Config('wrong configuration');
     }
 }
